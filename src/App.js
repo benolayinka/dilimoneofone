@@ -13,7 +13,7 @@ function App() {
 
   	var canvas, renderer, scene, camera, clock, mixer, controls
 
-  	var skinnedMeshes = []
+  	var materials = [], parameters
 
   	function extendScene(props){
 
@@ -29,30 +29,83 @@ function App() {
 
 	  	scene.background = new THREE.Color('red');
 
+	  	var avatar = new THREE.Object3D()
+
+	  	scene.add(avatar)
+
 	  	let loader = new GLTFLoader()
+
 	  	loader.load('assets/coach-animated.glb', (gltf)=>{
+
 	  		gltf.scene.traverse((mesh)=>{
+
 				if(mesh.isSkinnedMesh) {
-					skinnedMeshes.push(mesh)
 					const helper = new THREE.BoxHelper(mesh);
-					helper.update()
-					scene.add(helper)
+					helper.visible = false
+					avatar.add(helper)
 				}
 	  		})
+
 			mixer = new THREE.AnimationMixer( gltf.scene );
+
 	 		var action = mixer.clipAction( gltf.animations[ 0 ] );
+
 	  		action.play();
+
 			scene.add(gltf.scene)
-			setContent(scene, camera, controls)
+
+			setContent(avatar, camera, controls)
 	  	})
 
-	  	let spotLight = new THREE.SpotLight(0xffffff, 0.9)
+	  	let spotLight = new THREE.SpotLight(0xffffff, 1)
 	  	spotLight.position.set(45, 50, 15);
 	  	scene.add(spotLight);
 
-	  	let ambLight = new THREE.AmbientLight(0xffffff);
+	  	let ambLight = new THREE.AmbientLight(0xffffff, 0.5);
 	  	ambLight.position.set(5, 3, 5);
 	  	scene.add(ambLight);
+
+	  	var geometry = new THREE.BufferGeometry();
+		var vertices = [];
+
+		var textureLoader = new THREE.TextureLoader();
+
+		var sprite1 = textureLoader.load( 'assets/dollar.png' );
+
+		for ( var i = 0; i < 100; i ++ ) {
+
+			var x = Math.random() * 20 - 10;
+			var y = Math.random() * 20 - 10;
+			var z = Math.random() * 20 - 10;
+
+			vertices.push( x, y, z );
+
+		}
+
+		geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+		parameters = [
+			[[ 1.0, 0.2, 0.5 ], sprite1, 1 ],
+		];
+
+		for ( var i = 0; i < parameters.length; i ++ ) {
+
+			var color = parameters[ i ][ 0 ];
+			var sprite = parameters[ i ][ 1 ];
+			var size = parameters[ i ][ 2 ];
+
+			materials[ i ] = new THREE.PointsMaterial( { size: size, map: sprite, blending: THREE.AdditiveBlending, transparent: true } );
+			materials[ i ].color.setHSL( color[ 0 ], color[ 1 ], color[ 2 ] );
+
+			var particles = new THREE.Points( geometry, materials[ i ] );
+
+			particles.rotation.x = Math.random() * 6;
+			particles.rotation.y = Math.random() * 6;
+			particles.rotation.z = Math.random() * 6;
+
+			scene.add( particles );
+
+		}
 
 	  	handleWindowResize()
 
@@ -67,6 +120,9 @@ function App() {
 	}
 
   	function animate(){
+
+  		var time = Date.now() * 0.00005;
+
 		var delta = clock.getDelta();
 
 		if(mixer){
@@ -76,6 +132,18 @@ function App() {
     	controls.update();
 
 		renderer.render(scene, camera)
+
+		for ( var i = 0; i < scene.children.length; i ++ ) {
+
+					var object = scene.children[ i ];
+
+					if ( object instanceof THREE.Points ) {
+
+						object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
+
+					}
+
+				}
 
 		requestAnimationFrame(animate)
   	}
