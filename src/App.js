@@ -27,7 +27,7 @@ function App() {
 
 		clock = new THREE.Clock()
 
-	  	scene.background = new THREE.Color('red');
+	  	//scene.background = new THREE.Color('red');
 
 	  	var avatar = new THREE.Object3D()
 
@@ -107,6 +107,8 @@ function App() {
 
 		}
 
+		window.addEventListener('resize', handleWindowResize)
+
 	  	handleWindowResize()
 
 	  	animate()
@@ -151,7 +153,7 @@ function App() {
 	return (
 		<div className="App">
 			<ThreeSceneRenderer 
-				className='h-100 w-100 position-absolute' 
+				className='h-100 w-100 position-absolute bg-gradient' 
 				adaptToDeviceRatio 
 				gammaCorrect
 				onMount={extendScene}
