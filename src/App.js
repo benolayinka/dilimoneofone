@@ -54,7 +54,7 @@ function App() {
 
 			scene.add(gltf.scene)
 
-			setContent(avatar, camera, controls)
+			setContent(gltf.scene, camera, controls)
 	  	})
 
 	  	let spotLight = new THREE.SpotLight(0xffffff, 1)
@@ -103,7 +103,7 @@ function App() {
 			particles.rotation.y = Math.random() * 6;
 			particles.rotation.z = Math.random() * 6;
 
-			scene.add( particles );
+			//scene.add( particles );
 
 		}
 
