@@ -48,13 +48,15 @@ function App() {
 
 			mixer = new THREE.AnimationMixer( gltf.scene );
 
-	 		var action = mixer.clipAction( gltf.animations[ 0 ] );
+	 		var action = mixer.clipAction( gltf.animations[ 1 ] );
 
 	  		action.play();
 
 			scene.add(gltf.scene)
 
 			setContent(gltf.scene, camera, controls)
+			camera.position.x = camera.position.x + 5
+			camera.position.y = camera.position.y + 5
 	  	})
 
 	  	let spotLight = new THREE.SpotLight(0xffffff, 1)
