@@ -55,6 +55,7 @@ function App() {
 			scene.add(gltf.scene)
 
 			setContent(gltf.scene, camera, controls)
+			controls.autoRotate = true
 			camera.position.x = camera.position.x + 5
 			camera.position.y = camera.position.y + 5
 	  	})
