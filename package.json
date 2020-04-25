@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@bit/benolayinka.benolayinka.basic-scene-builder": "0.0.5",
+    "@bit/benolayinka.benolayinka.emoji": "0.0.1",
     "@bit/benolayinka.benolayinka.three-scene-renderer": "0.0.4",
     "@bit/benolayinka.benolayinka.utils": "file:components/utils",
     "@testing-library/jest-dom": "^4.2.4",
@@ -13,8 +14,12 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
+    "react-howler": "^3.7.4",
     "react-scripts": "3.4.1",
-    "three": "^0.115.0"
+    "react-transition-group": "^4.3.0",
+    "three": "^0.115.0",
+    "three.interaction": "^0.2.2",
+    "xstate": "^4.9.1"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

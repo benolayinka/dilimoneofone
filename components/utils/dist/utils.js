@@ -11,6 +11,7 @@ exports.setContent = setContent;
 exports.showEdges = showEdges;
 exports.setEdgeWidth = setEdgeWidth;
 exports.setDashed = setDashed;
+exports.setEdgeColor = setEdgeColor;
 
 var THREE = _interopRequireWildcard(require("three"));
 
@@ -75,6 +76,8 @@ function setContent(object, camera, controls, offset) {
 
   if (controls) {
     controls.target.copy(center);
+    controls.minDistance = size / 10;
+    controls.maxDistance = size * 10;
   }
 }
 
@@ -100,6 +103,10 @@ function setEdgeWidth(width) {
 
 function setDashed(dashed) {
   material.dashed = dashed;
+}
+
+function setEdgeColor(color) {
+  material.color.set(color);
 }
 
 //# sourceMappingURL=utils.js.map

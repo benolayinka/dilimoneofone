@@ -55,6 +55,9 @@ export function setContent(object, camera, controls, offset){
 
     if(controls){
         controls.target.copy(center)
+        controls.minDistance = size / 10;
+        controls.maxDistance = size * 10;
+
     }
 }
 
@@ -78,4 +81,8 @@ export function setEdgeWidth(width){
 
 export function setDashed(dashed){
     material.dashed = dashed
+}
+
+export function setEdgeColor(color){
+    material.color.set(color)
 }
