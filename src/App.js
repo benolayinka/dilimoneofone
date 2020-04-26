@@ -238,7 +238,7 @@ function App() {
 			<div className="h-100 w-100 position-absolute text-color d-flex justify-content-center align-items-center text-center">
 				<h1 className = "grow">keep the fire burning!</h1>
 			</div>
-			<div className = 'z-8 top p-2 d-flex justify-content-center'>
+			<div className = 'z-8 bottom p-2 d-flex justify-content-center'>
 				<button 
 					className='btn-naked'
 					onClick={onPlayButton}
