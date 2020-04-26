@@ -55,6 +55,13 @@
 	right: 0;
 }
 
+.top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .play-active {
 	animation: play-active 0.46975s ease-in-out infinite alternate;
     -webkit-animation: play-active 0.46975s ease-in-out infinite alternate;
