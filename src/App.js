@@ -88,12 +88,15 @@ function App() {
 	  				mesh.on('touchstart', onClick)
 
 	  				pos[mesh.userData.pos] = mesh.position
+
+	  				console.log(mesh.userData.pos)
 	  			}
 
 				if(mesh.isSkinnedMesh) {
 					mesh.frustumCulled = false
 					const helper = new THREE.BoxHelper(mesh);
 					helper.visible = false
+
 					avatar.add(helper)
 				}
 	  		})
@@ -135,6 +138,13 @@ function App() {
 
 			//floor
 			var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 30, 20 ), new THREE.MeshBasicMaterial( { color: 'pink', side: THREE.DoubleSide} ) );
+			mesh.cursor = 'pointer'
+			function playSalsa(ev){
+				ev.stopPropagation()
+	  			playAction(salsa)
+			}
+			mesh.on('click', playSalsa);
+	  		mesh.on('touchstart', playSalsa)
 			showEdges(mesh)
 			setEdgeColor('white')
 			setEdgeWidth(3)
