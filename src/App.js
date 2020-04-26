@@ -10,6 +10,7 @@ import { Interaction } from 'three.interaction';
 import ReactHowler from 'react-howler';
 import { CSSTransition } from 'react-transition-group'
 import Emoji from '@bit/benolayinka.benolayinka.emoji'
+import {isIOS} from 'react-device-detect';
 
 const NEAR = 0.01, FAR = 1000, FOV = 60, ASPECT = 16/9
 
@@ -254,6 +255,7 @@ function App() {
 				src="/assets/burn.mp3"
 				playing={playing}
 				loop={true}
+				html5={isIOS ? true : false}
 			  />
 			<ThreeSceneRenderer 
 				className='h-100 w-100 position-absolute' 
