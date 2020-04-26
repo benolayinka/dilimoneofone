@@ -35,7 +35,7 @@ export function setCameraToBoundingBox(camera, object){
 
 }
 
-export function setContent(object, camera, controls, offset){
+export function setContent(object, camera, controls, width, height, offset){
     const box = new THREE.Box3().setFromObject(object);
     const size = box.getSize(new THREE.Vector3()).length();
     const center = box.getCenter(new THREE.Vector3());
@@ -47,7 +47,7 @@ export function setContent(object, camera, controls, offset){
     camera.position.copy(center);
     camera.lookAt(center);
 
-    if(offset){
+    if(offset) {
         camera.position.set(offset.x, offset.y, offset.z)
     } else {
         camera.position.z += size
@@ -57,7 +57,6 @@ export function setContent(object, camera, controls, offset){
         controls.target.copy(center)
         controls.minDistance = size / 10;
         controls.maxDistance = size * 10;
-
     }
 }
 

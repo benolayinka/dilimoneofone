@@ -23,6 +23,8 @@ function App() {
 
   	var salsa, dribble, run, actions
 
+  	var actionMap
+
 	var interaction
 
   	var character
@@ -72,7 +74,11 @@ function App() {
 
 	  			if(mesh.userData.pos){
 	  				mesh.cursor = 'pointer'
-	  				mesh.on('click', function(ev) {});
+	  				mesh.on('click', function(ev) {
+	  					ev.stopPropagation()
+	  					playAction(actionMap[mesh.userData.pos])
+	  				});
+
 	  				pos[mesh.userData.pos] = mesh.position
 	  			}
 
@@ -91,15 +97,26 @@ function App() {
 
 			actions = [salsa, dribble, run]
 
+			actionMap = {
+		  		'salsa': salsa,
+		  		'dribble': dribble,
+		  		'run': run,
+		  	}
+
 			var i = 0
 
-			window.addEventListener("click", ()=>{playAction(actions[++i%3])})
+			scene.cursor = 'pointer'
+			scene.on('click', function(ev) {
+				playAction(actions[++i%3])
+			});
+
+			//window.addEventListener("click", ()=>{playAction(actions[++i%3])})
 
 			playAction(salsa)
 
 			scene.add(gltf.scene)
 
-			setContent(avatar, camera, controls)
+			setContent(gltf.scene, camera, controls)
 
 			controls.autoRotate = true
 			controls.autoRotateSpeed = 0.7
@@ -196,21 +213,21 @@ function App() {
 							classNames="fade"
 							onExited={()=>{setShowLoading(false)}}
 					>
-						<div className = 'd-flex justify-content-center'>
-							<svg width="100" className='w-25 bounce p-4'>
-						    	<circle cx={50} cy={50} r={10} />
+						<div className = 'd-flex align-items-center justify-content-center'>
+							<svg width="20" className='m-4 bounce'>
+						    	<circle cx={10} cy={10} r={10} />
 							</svg>
-							<svg width="100" className='m-0 w-25 bounce p-4'>
-						    	<circle cx={50} cy={50} r={10} />
+							<svg width="20" className='m-4 bounce'>
+						    	<circle cx={10} cy={10} r={10} />
 							</svg>
-							<svg width="100" className='m-0 w-25 bounce p-4'>
-						    	<circle cx={50} cy={50} r={10} />
+							<svg width="20" className='m-4 bounce'>
+						    	<circle cx={10} cy={10} r={10} />
 							</svg>
 						</div>
 					</CSSTransition>
 				</div>
 			</CSSTransition>
-			<div className="h-100 w-100 position-absolute text-color d-flex justify-content-center align-items-center">
+			<div className="h-100 w-100 position-absolute text-color d-flex justify-content-center align-items-center text-center">
 				<h1 className = "grow">keep the fire burning!</h1>
 			</div>
 			<div className = 'z-8 bottom d-flex justify-content-center'>
