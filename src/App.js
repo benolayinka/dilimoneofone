@@ -74,10 +74,14 @@ function App() {
 
 	  			if(mesh.userData.pos){
 	  				mesh.cursor = 'pointer'
-	  				mesh.on('click', function(ev) {
+
+	  				function onClick(ev) {
 	  					ev.stopPropagation()
 	  					playAction(actionMap[mesh.userData.pos])
-	  				});
+	  				}
+
+	  				mesh.on('click', onClick);
+	  				mesh.on('touchstart', onClick)
 
 	  				pos[mesh.userData.pos] = mesh.position
 	  			}
@@ -105,10 +109,13 @@ function App() {
 
 			var i = 0
 
-			scene.cursor = 'pointer'
-			scene.on('click', function(ev) {
+			function sceneClick(ev){
 				playAction(actions[++i%3])
-			});
+			}
+
+			scene.cursor = 'pointer'
+			scene.on('click', sceneClick);
+			scene.on('touchstart', sceneClick)
 
 			//window.addEventListener("click", ()=>{playAction(actions[++i%3])})
 
