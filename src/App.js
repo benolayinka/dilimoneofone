@@ -11,32 +11,35 @@ import ReactHowler from 'react-howler';
 import { CSSTransition } from 'react-transition-group'
 import Emoji from '@bit/benolayinka.benolayinka.emoji'
 import {isIOS} from 'react-device-detect';
+import { FaVolumeUp } from 'react-icons/fa';
 
 const NEAR = 0.01, FAR = 1000, FOV = 60, ASPECT = 16/9
+
+var actions //fucking js
+
+var canvas, renderer, scene, camera, clock, mixer, controls
+
+var salsa, dribble, run
+
+var actionMap
+
+var interaction
+
+var character
+
+var pos = {}
+
+var rot = {
+	run: Math.PI*2 / 360 * 190,
+}
+
+var materials = [], parameters
 
 function App() {
 
 	const [playing, setPlaying] = useState(false);
 	const [showLoading, setShowLoading] = useState(true);
 	const [showLoadingText, setShowLoadingText] = useState(true);
-
-  	var canvas, renderer, scene, camera, clock, mixer, controls
-
-  	var salsa, dribble, run, actions
-
-  	var actionMap
-
-	var interaction
-
-  	var character
-
-  	var pos = {}
-
-  	var rot = {
-  		run: Math.PI*2 / 360 * 190,
-  	}
-
-  	var materials = [], parameters
 
   	function extendScene(props){
 
@@ -88,6 +91,7 @@ function App() {
 	  			}
 
 				if(mesh.isSkinnedMesh) {
+					mesh.frustumCulled = false
 					const helper = new THREE.BoxHelper(mesh);
 					helper.visible = false
 					avatar.add(helper)
@@ -108,15 +112,10 @@ function App() {
 		  		'run': run,
 		  	}
 
-			var i = 0
-
-			function sceneClick(ev){
-				playAction(actions[++i%3])
-			}
-
-			scene.cursor = 'pointer'
-			scene.on('click', sceneClick);
-			scene.on('touchstart', sceneClick)
+			
+			//scene.cursor = 'pointer'
+			//scene.on('click', sceneClick);
+			//scene.on('touchstart', sceneClick)
 
 			//window.addEventListener("click", ()=>{playAction(actions[++i%3])})
 
@@ -205,6 +204,12 @@ function App() {
   		setPlaying(!playing)
   	}
 
+  	var i = 0
+	function sceneClick(){
+		playAction(actions[++i%3])
+	}
+
+
 	return (
 		<div className="App h-100 w-100 position-absolute bg-color">
 			<CSSTransition
@@ -238,16 +243,22 @@ function App() {
 			<div className="h-100 w-100 position-absolute text-color d-flex justify-content-center align-items-center text-center">
 				<h1 className = "grow">keep the fire burning!</h1>
 			</div>
-			<div className = 'z-8 bottom p-2 d-flex justify-content-center'>
+			<div className = 'z-8 bottom p-2 d-flex justify-content-center text-color'>
+				<button 
+					className='btn-naked'
+					onClick={sceneClick}
+					>
+					<h2>move!</h2>
+				</button>
 				<button 
 					className='btn-naked'
 					onClick={onPlayButton}
 				>
 					{
 					playing ?
-					<h2 className = 'play play-active'><Emoji symbol="🔈" label="play"/></h2>
+					<h2 className = 'play play-active'><FaVolumeUp /></h2>
 					:
-					<h2 className = 'play'><Emoji symbol="🔈" label="stop"/></h2>
+					<h2 className = 'play'><FaVolumeUp /></h2>
 					}
 				</button>
 			</div>

@@ -28,6 +28,7 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
+  color: inherit;
 }
 
 .btn-naked:focus {
