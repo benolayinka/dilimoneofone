@@ -21,6 +21,8 @@ var canvas, renderer, scene, camera, clock, mixer, controls
 
 var salsa, dribble, run
 
+var ball, ballAction
+
 var actionMap
 
 var interaction
@@ -76,6 +78,10 @@ function App() {
 	  				character = mesh
 	  			}
 
+	  			if(mesh.userData.ball){
+	  				ball = mesh
+	  			}
+
 	  			if(mesh.userData.pos){
 	  				mesh.cursor = 'pointer'
 
@@ -106,6 +112,8 @@ function App() {
 			dribble = mixer.clipAction(gltf.animations[0])
 			run = mixer.clipAction(gltf.animations[1])
 			salsa = mixer.clipAction(gltf.animations[2])
+
+			ballAction = mixer.clipAction(gltf.animations[3])
 
 			actions = [salsa, dribble, run]
 
@@ -174,6 +182,8 @@ function App() {
   		actions.forEach(action=>{
   			action.stop()
   		})
+  		ballAction.stop()
+  		ball.visible = false
   		if(action === salsa){
   			character.position.copy(pos['salsa'])
   			character.rotation.z = 0
@@ -184,6 +194,8 @@ function App() {
   		else if (action === dribble){
   			character.position.copy(pos['dribble'])
   			character.rotation.z = 0
+  			ballAction.play()
+  			ball.visible = true
   		}
   		action.play()
   	}
