@@ -19,7 +19,7 @@
     "react-icons": "^3.10.0",
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.3.0",
-    "three": "^0.115.0",
+    "three": "^0.125.0",
     "three.interaction": "^0.2.2",
     "xstate": "^4.9.1"
   },
