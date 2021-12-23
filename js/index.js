@@ -46,6 +46,7 @@ var materials = [], parameters
 var sound = new Howl({
   src: ['/assets/burn.mp3'],
   loop: true,
+  html5: true
 });
 
 var soundButton = document.getElementById("sound-button")
